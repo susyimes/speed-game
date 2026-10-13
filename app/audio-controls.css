@@ -1,0 +1,12 @@
+.audio-controls{width:min(300px,calc(100vw - 28px));padding:20px;gap:23px;background:#162a2a;color:#f5f5e9;border:1px solid #dff68438;border-radius:18px;box-shadow:0 18px 60px #08191866;font-size:14px;--primary:#dff684;--muted:#47605a;--ring:#dff684;--input:#51655c;--background:#142921}
+.audio-heading{display:flex;align-items:center;justify-content:space-between;gap:24px}
+.audio-heading [data-slot=popover-title]{font-size:19px;font-weight:650}
+.audio-heading label{display:flex;align-items:center;gap:12px;font-size:13px;color:#d3dfd3}
+.audio-level>div:first-child{display:flex;justify-content:space-between;gap:16px;margin-bottom:16px}
+.audio-level output{color:#dff684;font-variant-numeric:tabular-nums}
+.audio-controls [data-slot=slider]{padding:7px 0}
+.audio-controls [data-slot=slider-track]{height:5px;background:#47605a}
+.audio-controls [data-slot=slider-range]{background:#dff684}
+.audio-controls [data-slot=slider-thumb]{width:17px;height:17px;background:#dff684;border-color:#dff684}
+.audio-controls>a{font-size:12px;line-height:1.5;color:#a9bfb2;text-decoration:none}
+.audio-controls>a:hover{text-decoration:underline}

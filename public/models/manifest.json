@@ -1,0 +1,175 @@
+{
+  "authoring": "Tripo Studio and Blender; private authoring/account records are not distributed",
+  "revision": "tripo-lively-heroes-expressions-v3",
+  "selected_concept": "art/concepts/2026-09-08-chibi-options/b-lively-hero.png",
+  "base": {
+    "creator": "Kay Lousberg",
+    "license": "CC0-1.0",
+    "source": "https://github.com/KayKit-Game-Assets/KayKit-Character-Pack-Adventures-1.0",
+    "commit": "672074b73ba276876a19e8816ecdc5241817ab47",
+    "appliesTo": [],
+    "role": "Historical base retained for the earlier procedural studies"
+  },
+  "characters": [
+    {
+      "character": "hermes",
+      "revision": "tripo-lively-heroes-expressions-v3",
+      "triangles": 79247,
+      "meshes": 1,
+      "bytes": 4254288,
+      "sha256": "93b2410e05c885d9dc4e35b05a668c28dc9929ed03a6f611675d2eccb16bd73e",
+      "clips": [
+        "Idle",
+        "Run",
+        "Boost",
+        "Hit",
+        "Warmup"
+      ],
+      "bones": 27,
+      "license": "Tripo account terms; not CC0",
+      "embeddedImages": [
+        {
+          "width": 2048,
+          "height": 2048,
+          "bytes": 451567,
+          "mimeType": "image/jpeg"
+        },
+        {
+          "width": 2048,
+          "height": 2048,
+          "bytes": 313194,
+          "mimeType": "image/jpeg"
+        },
+        {
+          "width": 2048,
+          "height": 2048,
+          "bytes": 183960,
+          "mimeType": "image/jpeg"
+        }
+      ],
+      "materialPrimitives": 1,
+      "morphTargets": [
+        "Grip",
+        "Blink",
+        "Smile",
+        "Focus",
+        "Surprise"
+      ],
+      "expressionClips": [
+        "Idle",
+        "Run",
+        "Boost",
+        "Hit",
+        "Warmup"
+      ],
+      "source": "Tripo Studio output with project-specific Blender rigging, animation and expressions",
+      "distribution": "Maintainer confirmed commercial use and redistribution with this project"
+    },
+    {
+      "character": "nezha",
+      "revision": "tripo-lively-heroes-expressions-v3",
+      "triangles": 78159,
+      "meshes": 1,
+      "bytes": 4196468,
+      "sha256": "e52976d47720e1446f74d6eabb843c07ea3ef1cbe3104f4cbdfbc9991ac6989f",
+      "clips": [
+        "Idle",
+        "Run",
+        "Boost",
+        "Hit",
+        "Warmup"
+      ],
+      "bones": 33,
+      "license": "Tripo account terms; not CC0",
+      "embeddedImages": [
+        {
+          "width": 2048,
+          "height": 2048,
+          "bytes": 440236,
+          "mimeType": "image/jpeg"
+        },
+        {
+          "width": 2048,
+          "height": 2048,
+          "bytes": 337904,
+          "mimeType": "image/jpeg"
+        },
+        {
+          "width": 2048,
+          "height": 2048,
+          "bytes": 172421,
+          "mimeType": "image/jpeg"
+        }
+      ],
+      "materialPrimitives": 1,
+      "morphTargets": [
+        "Blink",
+        "Smile",
+        "Focus",
+        "Surprise"
+      ],
+      "expressionClips": [
+        "Idle",
+        "Run",
+        "Boost",
+        "Hit",
+        "Warmup"
+      ],
+      "source": "Tripo Studio output with project-specific Blender rigging, animation and expressions",
+      "distribution": "Maintainer confirmed commercial use and redistribution with this project"
+    },
+    {
+      "character": "djinn",
+      "revision": "tripo-lively-heroes-expressions-v3",
+      "triangles": 79270,
+      "meshes": 1,
+      "bytes": 4066368,
+      "sha256": "8bcedcbb19e51e1b1d9d1379f471d024a2fbc81a02ba1515f06c797f2667f90d",
+      "clips": [
+        "Idle",
+        "Run",
+        "Boost",
+        "Hit",
+        "Warmup"
+      ],
+      "bones": 24,
+      "license": "Tripo account terms; not CC0",
+      "embeddedImages": [
+        {
+          "width": 2048,
+          "height": 2048,
+          "bytes": 420075,
+          "mimeType": "image/jpeg"
+        },
+        {
+          "width": 2048,
+          "height": 2048,
+          "bytes": 256663,
+          "mimeType": "image/jpeg"
+        },
+        {
+          "width": 2048,
+          "height": 2048,
+          "bytes": 186650,
+          "mimeType": "image/jpeg"
+        }
+      ],
+      "materialPrimitives": 1,
+      "morphTargets": [
+        "Blink",
+        "Smile",
+        "Focus",
+        "Surprise"
+      ],
+      "expressionClips": [
+        "Idle",
+        "Run",
+        "Boost",
+        "Hit",
+        "Warmup"
+      ],
+      "source": "Tripo Studio output with project-specific Blender rigging, animation and expressions",
+      "distribution": "Maintainer confirmed commercial use and redistribution with this project"
+    }
+  ]
+}

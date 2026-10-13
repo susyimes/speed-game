@@ -1,0 +1,30 @@
+{
+  "island": {
+    "triangles": 1438,
+    "bytes": 55852
+  },
+  "palm": {
+    "triangles": 5432,
+    "bytes": 146804
+  },
+  "temple": {
+    "triangles": 2496,
+    "bytes": 148672
+  },
+  "pavilion": {
+    "triangles": 2804,
+    "bytes": 129312
+  },
+  "market": {
+    "triangles": 5628,
+    "bytes": 179372
+  },
+  "garden": {
+    "triangles": 6180,
+    "bytes": 194072
+  },
+  "lantern": {
+    "triangles": 1300,
+    "bytes": 43296
+  }
+}

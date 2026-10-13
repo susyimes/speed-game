@@ -1,0 +1,24 @@
+GODSPEED / 神速 — Asset credits
+
+Current characters: Hermes, Nezha and Djinn
+Generated with Tripo Studio from the selected Lively Heroes concept references.
+Blender authoring: character-specific skeletons, skinning, costume motion,
+Idle / Warmup / Run / Boost / Hit, local facial shapes and Hermes running fists.
+Revision: tripo-lively-heroes-expressions-v3
+Current character meshes follow the applicable Tripo account terms; they are
+not CC0 assets. Per-character provenance is in /models/manifest.json.
+
+Historical character studies (replaced in the current game):
+KayKit Adventurers Character Pack 1.0 — Rogue, by Kay Lousberg.
+https://kaylousberg.com
+License: Creative Commons Zero (CC0 1.0 Universal)
+https://creativecommons.org/publicdomain/zero/1.0/
+Source: https://github.com/KayKit-Game-Assets/KayKit-Character-Pack-Adventures-1.0
+Revision: 672074b73ba276876a19e8816ecdc5241817ab47
+This attribution describes historical studies; those study files are not included in this public distribution.
+
+Environment models: original geometry and materials authored for Godspeed.
+Music and sound effects: see /audio/CREDITS.txt and /audio/manifest.json.
+
+The maintainer confirmed commercial use and redistribution of the shipped Godspeed assets.
+See ASSETS.md in the source repository for the scope; third-party terms remain applicable.

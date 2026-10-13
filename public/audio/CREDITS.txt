@@ -1,0 +1,25 @@
+GODSPEED / 神速 — Music and sound effects
+
+Original game-specific audio generated locally on 2026-09-09.
+No existing song, artist reference or third-party recording was supplied.
+
+Music: ACE-Step 1.5 / acestep-v15-turbo
+https://github.com/ace-step/ACE-Step-1.5
+Generator repository license: MIT
+Revision: ca1e85fe9430179831e6bc6be790c332190a3866
+
+Sound effects: Dasheng-AudioGen / mispeech/Dasheng-AudioGen
+https://github.com/xiaomi-research/dasheng-audiogen
+Generator repository license: Apache-2.0
+Revision: 3ff4ee42670692ebd5c731d5ba15e399ff5cc514
+
+Production: active-region editing, circular crossfades, loudness normalization,
+and OGG Vorbis / MP3 encoding. Some gameplay events share a source with different
+playback rates and levels. Wind and rail textures respond to running speed.
+
+No model code or model weights ship in this game.
+Prompts, seeds, generator revisions and asset checksums: /audio/manifest.json
+
+2026-09-10 fidelity pass: music re-encoded from retained lossless 48 kHz PCM masters
+to 48 kHz stereo Vorbis q8 and 320 kbps MP3, retaining the original loudness gain.
+Music source compositions and the original sound effects are unchanged.
