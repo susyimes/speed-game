@@ -1,3 +1,4 @@
+import { t } from './i18n.ts';
 export interface LoadingProgress {
   percent: number;
   stage: 'connecting' | 'downloading' | 'preparing' | 'ready';
@@ -54,10 +55,10 @@ export class LoadingTracker {
 }
 
 export function loadingHint(progress: LoadingProgress): string {
-  if (progress.stage === 'ready') return '赛道就绪';
-  if (progress.stage === 'preparing') return '资源已到齐，正在布置赛道…';
-  if (progress.stalled) return '网络暂时较慢，正在等待资源…';
-  if (progress.remainingSeconds === null) return progress.stage === 'connecting' ? '正在连接赛道…' : '正在估算剩余时间…';
+  if (progress.stage === 'ready') return t("赛道就绪");
+  if (progress.stage === 'preparing') return t("资源已到齐，正在布置赛道…");
+  if (progress.stalled) return t("网络暂时较慢，正在等待资源…");
+  if (progress.remainingSeconds === null) return progress.stage === 'connecting' ? t("正在连接赛道…") : t("正在估算剩余时间…");
   const seconds = Math.max(5, Math.ceil(progress.remainingSeconds / 5) * 5);
-  return seconds < 60 ? `预计还需约 ${seconds} 秒` : `预计还需约 ${Math.floor(seconds / 60)} 分${seconds % 60 ? ` ${seconds % 60} 秒` : '钟'}`;
+  return seconds < 60 ? t("预计还需约 {0} 秒", [seconds]) : t("预计还需约 {0} 分{1}", [Math.floor(seconds / 60), seconds % 60 ? t(" {0} 秒", [seconds % 60]) : t("钟")]);
 }

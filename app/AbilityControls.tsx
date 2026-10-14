@@ -1,4 +1,5 @@
 'use client';
+import { t } from '@/game/i18n';
 import {useEffect,useId,useRef,type CSSProperties,type RefObject,type PointerEvent} from 'react';
 import {Wind,Flame,Sparkles,ArrowUp,Zap,Shield} from 'lucide-react';
 import {ABILITIES,ABILITY_RULES} from '@/game/abilities';
@@ -29,24 +30,24 @@ function ActionButton({engine,action,name,hint,keyName,className='',dim=false,ac
 export default function AbilityControls({engine,state,character}:{engine:EngineRef;state:GameSnapshot;character:CharacterId}){
   const config=ABILITIES[character],a=state.abilities,target=a.target;
   const Icon=character==='hermes'?Wind:character==='nezha'?Flame:Sparkles;
-  const primaryHint=character==='djinn'&&a.queued?'灯路已接通':character==='djinn'&&target?`抄近道 · ${target.distance}m`:a.primaryTime>0?`烟行 ${a.primaryTime.toFixed(1)}s`:state.cooldown>0?`${state.cooldown.toFixed(1)}s`:
-    character==='djinn'?(target?`烟行抄近道 · ${target.distance}m`:'化烟加速'):
-    character==='nezha'?(a.onLoop?'环轨加速':target?'高轨可引入':state.rail?'轨上提速':'蹬空加速'):'准备就绪';
-  const active=a.secondaryTime>0,secondaryHint=active?`${a.secondaryTime.toFixed(1)}s${character==='nezha'&&!a.shield?' · 吸附中':''}`:`剩 ${a.uses} 次`;
+  const primaryHint=character==='djinn'&&a.queued?t("灯路已接通"):character==='djinn'&&target?t("抄近道 · {0}m", [target.distance]):a.primaryTime>0?t("烟行 {0}s", [a.primaryTime.toFixed(1)]):state.cooldown>0?`${state.cooldown.toFixed(1)}s`:
+    character==='djinn'?(target?t("烟行抄近道 · {0}m", [target.distance]):t("化烟加速")):
+    character==='nezha'?(a.onLoop?t("环轨加速"):target?t("高轨可引入"):state.rail?t("轨上提速"):t("蹬空加速")):t("准备就绪");
+  const active=a.secondaryTime>0,secondaryHint=active?`${a.secondaryTime.toFixed(1)}s${character==='nezha'&&!a.shield?t(" · 吸附中"):''}`:t("剩 {0} 次", [a.uses]);
   const buttons=<>
-    <ActionButton engine={engine} action="skill" name={config.primaryShort} hint={primaryHint} keyName="E" dim={state.cooldown>0&&!a.primaryTime&&!a.queued&&!(character==='djinn'&&target)} active={a.primaryTime>0||a.queued||!!target} progress={a.primaryTime/ABILITY_RULES.smokeDuration}><Icon size={20}/></ActionButton>
-    <ActionButton engine={engine} action="secondary" name={config.secondaryShort} hint={secondaryHint} keyName="Q" dim={a.uses===0&&!active} active={active} progress={a.secondaryTime/ABILITY_RULES.duration}>{character==='nezha'?<Shield size={20}/>:<Wind size={20}/>}</ActionButton>
+    <ActionButton engine={engine} action="skill" name={t(config.primaryShort)} hint={primaryHint} keyName="E" dim={state.cooldown>0&&!a.primaryTime&&!a.queued&&!(character==='djinn'&&target)} active={a.primaryTime>0||a.queued||!!target} progress={a.primaryTime/ABILITY_RULES.smokeDuration}><Icon size={20}/></ActionButton>
+    <ActionButton engine={engine} action="secondary" name={t(config.secondaryShort)} hint={secondaryHint} keyName="Q" dim={a.uses===0&&!active} active={active} progress={a.secondaryTime/ABILITY_RULES.duration}>{character==='nezha'?<Shield size={20}/>:<Wind size={20}/>}</ActionButton>
   </>;
   return <>
-    <div className={`talent-indicator talent-${character} ${a.talentActive?'is-active':''}`}><Icon size={14}/><span>{a.talent}</span></div>
+    <div className={`talent-indicator talent-${character} ${a.talentActive?'is-active':''}`}><Icon size={14}/><span>{t(a.talent)}</span></div>
     <div className="desktop-abilities">{buttons}</div>
-    <div className="race-keyboard"><span><kbd>A</kbd><kbd>D</kbd>横移</span><span><kbd>Space</kbd>跳跃</span><span><kbd>Shift</kbd>冲刺</span><span><kbd>Esc</kbd>暂停</span></div>
+    <div className="race-keyboard"><span><kbd>A</kbd><kbd>D</kbd>{t("横移")}</span><span><kbd>Space</kbd>{t("跳跃")}</span><span><kbd>Shift</kbd>{t("冲刺")}</span><span><kbd>Esc</kbd>{t("暂停")}</span></div>
     <div className="mobile-abilities">
-      <div className="steering-tip"><span>↔</span><strong>左右滑动</strong><small>轻滑画面转向</small></div>
+      <div className="steering-tip"><span>↔</span><strong>{t("左右滑动")}</strong><small>{t("轻滑画面转向")}</small></div>
       <div className="mobile-action-grid">
         {buttons}
-        <ActionButton engine={engine} action="boost" name="冲刺" hint={`◇ ${state.tokens} / 5`} dim={state.tokens<5}><Zap size={20}/></ActionButton>
-        <ActionButton engine={engine} action="jump" name="跳跃" hint={state.rail?(character==='nezha'?'跳轨保速':'跳离高轨'):'越过障碍'}><ArrowUp size={22}/></ActionButton>
+        <ActionButton engine={engine} action="boost" name={t("冲刺")} hint={`◇ ${state.tokens} / 5`} dim={state.tokens<5}><Zap size={20}/></ActionButton>
+        <ActionButton engine={engine} action="jump" name={t("跳跃")} hint={state.rail?(character==='nezha'?t("跳轨保速"):t("跳离高轨")):t("越过障碍")}><ArrowUp size={22}/></ActionButton>
       </div>
     </div>
   </>;

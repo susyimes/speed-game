@@ -69,3 +69,9 @@ TypeScript、React、Three.js、Vinext / Vite。核心玩法在 `game/`，页面
 音乐和音效的生成版本、处理及文件哈希见 `public/audio/CREDITS.txt` 和 `public/audio/manifest.json`。原创环境模型随游戏保留。私人账户、生产环境、数据库、创作原始记录、缓存和旧 Git 历史均未分发。
 
 2026-10-13 公开版实测：标准 npm run build、npm run typecheck 与 npm test 均通过；100 项测试全部通过、无跳过。构建无需私人托管配置。
+
+## Languages
+
+The public player interface supports English and Simplified Chinese. On first visit it scans the browser's ordered preferences for the first supported English or Chinese language tag (`en` / `en-*` or `zh` / `zh-*`), then checks `navigator.language`, and defaults to English if neither is supported. The accessible **English / 简体中文** selector remains available in the menu and during races. A manual choice is saved under `godspeed:locale`; blocked browser storage falls back to an in-memory choice. Switching updates `document.lang`, UI, and active/future race prompts without restarting the attempt. Hero/course IDs, saved results, nicknames, API payloads, assets, and license documents retain their existing format. The private `/admin` records interface remains Chinese.
+
+Translations live in `game/translations.ts`; explicit render and simulation message lookups use `game/i18n.ts`, with no external i18n dependency. To preview both languages, run `npm run dev`, select each language, and check the menu, help/audio dialogs, race HUD, pause, finish, and both leaderboard tabs at desktop and narrow mobile widths.

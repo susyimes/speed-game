@@ -1,3 +1,4 @@
+import { t, message, translateMessage, type Message } from './i18n.ts';
 import { CHARACTERS, COURSES, SPEED, buildTrack, frameAt, clamp, railHeight, type CharacterId, type Track } from './track.ts';
 import {ABILITIES,ABILITY_RULES,lampTarget,nearbyRail,type AbilityState,type LampTransit} from './abilities.ts';
 import {COLLISIONS,type CollisionType} from './racing-rules.ts';
@@ -10,13 +11,13 @@ export class Simulation {
   sonic=false;sonicTime=0;bestSonic=0;airTime=0;airSonic=0;cooldown=0;boost=0;carpet=0;wishes=3;
   boostTarget=SPEED.boost;speedLimit=SPEED.normal;recovery=0;acceleration=0;boostAcceleration=SPEED.burstAcceleration;
   bursts=new Map<number,{time:number;acceleration:number}>();
-  railLock=0;railIgnore=0;invincible=0;smokeUsed=false;checkpoint=0;countdown=3;notice='';noticeTime=0;best=0;
+  railLock=0;railIgnore=0;invincible=0;smokeUsed=false;checkpoint=0;countdown=3;notice='';noticeMessage:Message|null=null;noticeTime=0;best=0;
   glide=0;glideSpeed=0;glideHeight=2.8;ward=0;wardShield=false;windCarry=0;carrySpeed=0;lampQueue=0;queuedLamp=-1;
   smoke=0;lampTravel:LampTransit|null=null;
   medal:'bronze'|'silver'|'gold'='bronze';seen=new Set<number>();taken=new Set<number>();passed=new Set<number>();events:string[]=[];
   distanceRun=0;railDistance=0;loopsCompleted=0;shortcutsUsed=0;isFalling=false;jumpBuffer=0;coyote=0;bumps=0;assists=0;bridged=new Set<number>();
   constructor(id=0){this.track=buildTrack(id);}
-  announce(message:string,duration=2){this.notice=message;this.noticeTime=duration;}
+  announce(value:string|Message,duration=2){this.noticeMessage=typeof value==='string'?null:value;this.notice=typeof value==='string'?value:t(value.key,value.values,'zh-CN');this.noticeTime=duration;}
   reset(){const c=this.character,t=this.track;Object.assign(this,new Simulation(t.id));this.track=t;this.character=c;this.mode='countdown';this.speed=SPEED.start;this.energy=20;this.tokens=5;this.announce('顺着下坡，积攒速度',3);}
   burst(seconds:number,target:number,acceleration=SPEED.burstAcceleration){target=clamp(target,SPEED.normal,SPEED.absolute);const active=this.bursts.get(target);this.bursts.set(target,{time:Math.max(active?.time??0,seconds),acceleration});this.syncBursts();this.recovery=Math.min(this.recovery,.15);}
   syncBursts(){this.boost=0;this.boostTarget=0;for(const [target,b]of this.bursts){this.boost=Math.max(this.boost,b.time);if(target>this.boostTarget){this.boostTarget=target;this.boostAcceleration=b.acceleration;}}}
@@ -48,8 +49,8 @@ export class Simulation {
   connectLamp(index:number,ready:boolean){if(ready)this.teleport(index);else{this.queuedLamp=index;this.lampQueue=ABILITY_RULES.lampBuffer;this.events.push('lamp-lock');this.announce('灯路已接通 · 靠近自动入灯');}}
   secondary(){
     const ability=ABILITIES[this.character];
-    if(this.wishes<=0){this.announce(`${ability.secondary}已用完`);return;}
-    if(this.glide>0||this.ward>0||this.carpet>0){this.announce(`${ability.secondary}正在生效`);return;}
+    if(this.wishes<=0){this.announce(message("{0}已用完", [ability.secondary]));return;}
+    if(this.glide>0||this.ward>0||this.carpet>0){this.announce(message("{0}正在生效", [ability.secondary]));return;}
     if(frameAt(this.track,this.s).loop){this.announce('出环后再使用第二技能');return;}
     this.wishes--;
     if(this.character==='hermes'){this.glide=ABILITY_RULES.duration;this.glideSpeed=clamp(Math.max(ABILITY_RULES.glideSpeed,this.speed),0,SPEED.absolute);this.recovery=Math.min(this.recovery,.15);this.glideHeight=Math.max(2.8,this.h);this.h=this.glideHeight;this.vy=0;this.grounded=false;this.rail=-1;this.railIgnore=.4;this.isFalling=false;this.events.push('glide');this.announce('翼靴滑翔 · 平稳提速，掠过矮障');}
@@ -64,7 +65,7 @@ export class Simulation {
     if((type==='box'||type==='gate')&&this.character==='djinn'&&!this.smokeUsed){this.smokeUsed=true;this.clearBursts();this.invincible=1;this.events.push('smoke');this.announce('化烟重组 · 容错已用');return;}
     if(this.character==='nezha'&&this.ward>0&&this.wardShield){this.wardShield=false;this.events.push('ward-block');this.announce('护环抵挡 · 速度保留');return;}
     const rule=COLLISIONS[type as CollisionType]??COLLISIONS.box,before=this.speed;
-    this.speed=Math.max(Math.min(this.speed,SPEED.recoveryFloor),this.speed*rule.retain);this.energy=Math.max(0,this.energy-rule.energy);this.clearBursts();this.glide=0;this.carpet=0;this.smoke=0;this.lampQueue=0;this.queuedLamp=-1;this.windCarry=0;this.acceleration=0;this.speedLimit=Math.max(SPEED.normal,Math.min(SPEED.absolute,this.speed));this.recovery=rule.recovery;this.sonic=false;this.sonicTime=0;this.invincible=rule.grace;this.bumps++;this.events.push(`impact:${type}`);this.announce(`${rule.label} · 减速 ${Math.round((before-this.speed)*3.6)} KM/H`,1.8);
+    this.speed=Math.max(Math.min(this.speed,SPEED.recoveryFloor),this.speed*rule.retain);this.energy=Math.max(0,this.energy-rule.energy);this.clearBursts();this.glide=0;this.carpet=0;this.smoke=0;this.lampQueue=0;this.queuedLamp=-1;this.windCarry=0;this.acceleration=0;this.speedLimit=Math.max(SPEED.normal,Math.min(SPEED.absolute,this.speed));this.recovery=rule.recovery;this.sonic=false;this.sonicTime=0;this.invincible=rule.grace;this.bumps++;this.events.push(`impact:${type}`);this.announce(message("{0} · 减速 {1} KM/H", [rule.label, Math.round((before-this.speed)*3.6)]),1.8);
   }
   respawn(){const edge=frameAt(this.track,this.s).width/2-.85;this.x=clamp(Number.isFinite(this.x)?this.x:0,-edge,edge);this.vx=0;this.h=0;this.vy=0;this.rail=-1;this.grounded=true;this.isFalling=false;this.speed=Math.max(SPEED.minimum,this.speed);this.announce('重新贴轨 · 保持前冲',1.3);}
   tick(dt:number,keys:Controls={left:false,right:false}){
@@ -146,6 +147,6 @@ export class Simulation {
     this.track.sectors.forEach((sec,i)=>{if(previous<=sec.s&&this.s>=sec.s&&!this.seen.has(i)){this.seen.add(i);this.announce(sec.name,3);}});
     if(this.s>=this.track.length){this.mode='finished';const gold=COURSES[this.track.id].gold;this.medal=this.time<=gold?'gold':this.time<=gold*1.25?'silver':'bronze';this.events.push('finish');}
   }
-  abilityState():AbilityState{const fire=this.character==='nezha'&&(this.rail>=0||this.windCarry>0),wind=this.character==='hermes'&&(this.glide>0||this.grounded&&frameAt(this.track,this.s).t.y<-.08);return {target:this.character==='djinn'?lampTarget(this.track,this.s,this.x):this.character==='nezha'?nearbyRail(this.track,this.s,this.x,this.rail):null,queued:this.lampQueue>0,onLoop:frameAt(this.track,this.s).loop,primaryTime:this.smoke,secondaryTime:Math.max(this.glide,this.ward,this.carpet),uses:this.wishes,shield:this.wardShield,talent:this.character==='nezha'?(frameAt(this.track,this.s).loop?'风火轮 · 环轨加速':this.rail>=0?'风火轮 · 轨上极速，能量不降':this.windCarry>0?'风火轮 · 跳轨保速':'风火轮 · 引轨后开启极速'):this.character==='hermes'?(this.glide>0?'翼靴 · 滑翔保速':wind?'翼靴 · 下坡加速':'翼靴 · 顺着下坡积攒惯性'):(this.lampTravel?'灯路 · 抄近道':this.smoke>0?'流烟 · 穿隙疾行':'化烟 · 穿栅栏不减速'),talentActive:fire||wind||this.smoke>0||!!this.lampTravel};}
-  snapshot():GameSnapshot{const abilities=this.abilityState(),gap=this.rail<0&&this.carpet===0&&this.glide===0&&this.grounded&&this.track.gaps.find(g=>g.start>this.s&&g.start-this.s<this.speed*1.15);const notice=gap&&this.mode==='racing'&&!this.notice?'前方缺口 · 跳跃保持极速':this.notice;return {mode:this.mode,time:this.time,speed:this.speed,energy:this.energy,tokens:this.tokens,bestSonic:this.bestSonic,airSonic:this.airSonic,progress:this.s/this.track.length,falls:0,bumps:this.bumps,assists:this.assists,cooldown:this.cooldown,wishes:this.wishes,abilities,sonic:this.sonic,rail:this.rail>=0,notice,countdown:this.countdown,medal:this.medal,best:this.best};}
+  abilityState():AbilityState{const fire=this.character==='nezha'&&(this.rail>=0||this.windCarry>0),wind=this.character==='hermes'&&(this.glide>0||this.grounded&&frameAt(this.track,this.s).t.y<-.08);return {target:this.character==='djinn'?lampTarget(this.track,this.s,this.x):this.character==='nezha'?nearbyRail(this.track,this.s,this.x,this.rail):null,queued:this.lampQueue>0,onLoop:frameAt(this.track,this.s).loop,primaryTime:this.smoke,secondaryTime:Math.max(this.glide,this.ward,this.carpet),uses:this.wishes,shield:this.wardShield,talent:t(this.character==='nezha'?(frameAt(this.track,this.s).loop?'风火轮 · 环轨加速':this.rail>=0?'风火轮 · 轨上极速，能量不降':this.windCarry>0?'风火轮 · 跳轨保速':'风火轮 · 引轨后开启极速'):this.character==='hermes'?(this.glide>0?'翼靴 · 滑翔保速':wind?'翼靴 · 下坡加速':'翼靴 · 顺着下坡积攒惯性'):(this.lampTravel?'灯路 · 抄近道':this.smoke>0?'流烟 · 穿隙疾行':'化烟 · 穿栅栏不减速')),talentActive:fire||wind||this.smoke>0||!!this.lampTravel};}
+  snapshot():GameSnapshot{const abilities=this.abilityState(),gap=this.rail<0&&this.carpet===0&&this.glide===0&&this.grounded&&this.track.gaps.find(g=>g.start>this.s&&g.start-this.s<this.speed*1.15);const notice=gap&&this.mode==='racing'&&!this.notice?'前方缺口 · 跳跃保持极速':this.notice;return {mode:this.mode,time:this.time,speed:this.speed,energy:this.energy,tokens:this.tokens,bestSonic:this.bestSonic,airSonic:this.airSonic,progress:this.s/this.track.length,falls:0,bumps:this.bumps,assists:this.assists,cooldown:this.cooldown,wishes:this.wishes,abilities,sonic:this.sonic,rail:this.rail>=0,notice:translateMessage(notice===this.notice&&notice&&this.noticeMessage?this.noticeMessage:notice),countdown:this.countdown,medal:this.medal,best:this.best};}
 }

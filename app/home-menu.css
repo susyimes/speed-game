@@ -159,3 +159,32 @@
 .leaderboard-tools { flex-wrap: wrap; }
 .home-footer { flex-shrink: 0; }
 @media (max-width:370px) { .is-menu .brand small { letter-spacing: 1.4px; font-size: 7px; } .is-menu .brand { gap: 6px; } .leaderboard-kicker { max-width: 145px; } .home-section-heading { flex-wrap: wrap; } }
+
+/* The language control remains reachable during a race and never captures game shortcuts. */
+.language-selector select { color: #f3f8dd; background: #143744; border: 1px solid #dce9ce88; border-radius: 7px; min-height: 36px; max-width: 118px; padding: 4px 7px; font-size: 12px; cursor: pointer; }
+.language-selector select:focus-visible { outline: 3px solid #e3fc71; outline-offset: 2px; }
+html[lang="en"] .home-heading h1 { font-size: clamp(32px, 4vw, 52px); letter-spacing: -1.5px; }
+html[lang="en"] .hero-option strong, html[lang="en"] .route-option strong { overflow-wrap: anywhere; }
+html[lang="en"] .home-section-heading, html[lang="en"] .home-records { flex-wrap: wrap; gap: 8px; }
+html[lang="en"] .race-action > small { white-space: normal; overflow-wrap: anywhere; line-height: 1.25; }
+html[lang="en"] .talent-indicator { max-width: 85vw; }
+html[lang="en"] .sonic-meta { flex-wrap: wrap; gap: 4px 10px; }
+@media (max-width: 600px) {
+  .topbar .utility, .is-menu .utility { gap: 5px; }
+  .language-selector select { max-width: 96px; font-size: 10px; padding: 3px; }
+  html[lang="en"] .brand { font-size: 15px; gap: 5px; }
+  html[lang="en"] .leaderboard-button { font-size: 11px; padding: 0 8px; gap: 4px; }
+  html[lang="en"] .mobile-action-grid .race-action-name { font-size: 12px; letter-spacing: 0; }
+  html[lang="en"] .steering-tip { max-width: 21vw; }
+  html[lang="en"] .home-start-hint { flex-wrap: wrap; }
+}
+@media (max-width: 390px) {
+  .topbar .brand small { display: none; }
+  .topbar .brand-mark { display: none; }
+  .topbar .utility .icon-btn { width: 30px; height: 34px; }
+}
+
+/* English course names need two lines inside the equal-width selection cells. */
+html[lang="en"] .route-option { min-width: 0; min-height: 54px; padding: 8px; gap: 6px; }
+html[lang="en"] .route-option > span { flex: 0 0 auto; }
+html[lang="en"] .route-option strong { min-width: 0; white-space: normal; overflow-wrap: anywhere; text-align: center; line-height: 1.25; }

@@ -1,3 +1,4 @@
+import { t } from './i18n.ts';
 import type {CharacterId} from './track.ts';
 import type {GameSnapshot} from './engine.ts';
 
@@ -5,8 +6,8 @@ import {CURRENT_RULESET} from '../shared/ruleset.mjs';
 
 let cachedNickname='';
 const uuid=()=>{if(crypto.randomUUID)return crypto.randomUUID();const bytes=crypto.getRandomValues(new Uint8Array(16));bytes[6]=(bytes[6]&15)|64;bytes[8]=(bytes[8]&63)|128;return [...bytes].map((b,i)=>([4,6,8,10].includes(i)?'-':'')+b.toString(16).padStart(2,'0')).join('');};
-export function readNickname(){if(cachedNickname)return cachedNickname;try{cachedNickname=localStorage.getItem('godspeed:nickname')??'';}catch{}if(!cachedNickname)saveNickname(`旅人-${uuid().slice(0,4).toUpperCase()}`);return cachedNickname;}
-export function saveNickname(value:string){cachedNickname=value.normalize('NFKC').replace(/[<>\u0000-\u001f\u007f\u202a-\u202e\u2066-\u2069]/g,'').trim().slice(0,24)||'乘风旅人';try{localStorage.setItem('godspeed:nickname',cachedNickname);}catch{}return cachedNickname;}
+export function readNickname(){if(cachedNickname)return cachedNickname;try{cachedNickname=localStorage.getItem('godspeed:nickname')??'';}catch{}if(!cachedNickname)saveNickname(`${t("旅人")}-${uuid().slice(0,4).toUpperCase()}`);return cachedNickname;}
+export function saveNickname(value:string){cachedNickname=value.normalize('NFKC').replace(/[<>\u0000-\u001f\u007f\u202a-\u202e\u2066-\u2069]/g,'').trim().slice(0,24)||t("乘风旅人");try{localStorage.setItem('godspeed:nickname',cachedNickname);}catch{}return cachedNickname;}
 
 // Small, same-origin, best-effort writes. Network and storage never gate racing.
 export class PlayRecorder {
