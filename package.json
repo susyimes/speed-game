@@ -8,6 +8,9 @@
   "scripts": {
     "dev": "vinext dev",
     "build": "node scripts/build.mjs",
+    "build:toy": "node scripts/build-toy.mjs",
+    "check:toy": "node scripts/verify-toy.mjs",
+    "preview:toy": "node scripts/serve-toy.mjs",
     "test": "node --test tests/*.test.ts tests/*.test.mjs",
     "typecheck": "tsc --noEmit",
     "start": "vite preview --outDir dist/client --host 127.0.0.1",

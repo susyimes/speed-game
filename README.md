@@ -70,6 +70,10 @@ TypeScript、React、Three.js、Vinext / Vite。核心玩法在 `game/`，页面
 
 2026-10-13 公开版实测：标准 npm run build、npm run typecheck 与 npm test 均通过；100 项测试全部通过、无跳过。构建无需私人托管配置。
 
+## Bilibili Toy
+
+Bilibili Toy 打包与预览流程见 [Toy 发布说明](docs/toy.md)：运行 `npm run build:toy` 生成可上传 ZIP。Toy 版使用本机成绩，不依赖线上成绩服务。
+
 ## Languages
 
 The public player interface supports English and Simplified Chinese. On first visit it scans the browser's ordered preferences for the first supported English or Chinese language tag (`en` / `en-*` or `zh` / `zh-*`), then checks `navigator.language`, and defaults to English if neither is supported. The accessible **English / 简体中文** selector remains available in the menu and during races. A manual choice is saved under `godspeed:locale`; blocked browser storage falls back to an in-memory choice. Switching updates `document.lang`, UI, and active/future race prompts without restarting the attempt. Hero/course IDs, saved results, nicknames, API payloads, assets, and license documents retain their existing format. The private `/admin` records interface remains Chinese.
